@@ -356,6 +356,30 @@ describe('createHandler', () => {
       expectTypeOf<Handler1Output>().toEqualTypeOf<{ first: number }>()
       expectTypeOf<Handler2Output>().toEqualTypeOf<{ second: 'second' }>()
     })
+
+    it('Should preserve each handler response type for nine handlers', () => {
+      const handlers = factory.createHandlers(
+        (c) => c.json({ n: 1 as const }),
+        (c) => c.json({ n: 2 as const }),
+        (c) => c.json({ n: 3 as const }),
+        (c) => c.json({ n: 4 as const }),
+        (c) => c.json({ n: 5 as const }),
+        (c) => c.json({ n: 6 as const }),
+        (c) => c.json({ n: 7 as const }),
+        (c) => c.json({ n: 8 as const }),
+        (c) => c.json({ n: 9 as const })
+      )
+
+      expectTypeOf<ExtractOutput<(typeof handlers)[0]>>().toEqualTypeOf<{ n: 1 }>()
+      expectTypeOf<ExtractOutput<(typeof handlers)[1]>>().toEqualTypeOf<{ n: 2 }>()
+      expectTypeOf<ExtractOutput<(typeof handlers)[2]>>().toEqualTypeOf<{ n: 3 }>()
+      expectTypeOf<ExtractOutput<(typeof handlers)[3]>>().toEqualTypeOf<{ n: 4 }>()
+      expectTypeOf<ExtractOutput<(typeof handlers)[4]>>().toEqualTypeOf<{ n: 5 }>()
+      expectTypeOf<ExtractOutput<(typeof handlers)[5]>>().toEqualTypeOf<{ n: 6 }>()
+      expectTypeOf<ExtractOutput<(typeof handlers)[6]>>().toEqualTypeOf<{ n: 7 }>()
+      expectTypeOf<ExtractOutput<(typeof handlers)[7]>>().toEqualTypeOf<{ n: 8 }>()
+      expectTypeOf<ExtractOutput<(typeof handlers)[8]>>().toEqualTypeOf<{ n: 9 }>()
+    })
   })
 })
 
